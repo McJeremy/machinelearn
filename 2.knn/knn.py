@@ -6,6 +6,7 @@ def createDataSet():
     labels = ['A', 'A', 'B', 'B']
     return group, labels
 
+# 分类
 def classify(input,dataSet,label,k):
     dataSize = dataSet.shape[0]
 
@@ -48,13 +49,25 @@ def fileToMatrix(filename):
     return returnMat,classLabelVector
 
 def autoNorm(dataSet):
+    '''
+    均值归一化
+    :param dataSet:
+    :return:
+    '''
     minVals = dataSet.min(0)
     maxVals = dataSet.max(0)
     ranges = maxVals-minVals
     normDataSet = zeros(shape(dataSet))
     m = dataSet.shape[0]
-    normDataSet = dataSet -tile(minVals,(m,1))
+    normDataSet = dataSet -tile(minVals,(m,1))  #title，表示将MinVals重复多少次
     normDataSet = normDataSet/tile(ranges,(m,1))
+    '''
+    算法：
+       原始值-最小值 / 最大值-最小值
+    还有一种算法叫 mean normal:
+       原始值-平均值 / 最大值-最小值
+    还有其他的归一化计算方法
+    '''
     return normDataSet,ranges,minVals
 
 def datingClassTest():
